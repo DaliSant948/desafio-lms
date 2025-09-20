@@ -31,7 +31,7 @@ public class TarefaService {
     public List<Tarefa> listarPorMatricula(Matricula matricula) {
         return tarefaRepository.findByMatricula(matricula);
     }
-    
+
     private void validarDuracao(int duracaoMinutos) {
         if (duracaoMinutos < 30) {
             throw new IllegalArgumentException("A duração mínima de uma tarefa é 30 minutos.");

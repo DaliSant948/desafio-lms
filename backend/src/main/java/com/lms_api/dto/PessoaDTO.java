@@ -17,10 +17,10 @@ public class PessoaDTO {
 
     private Long id;
     private String primeiroNome;
-    private OffsetDateTime ultimoNome;
+    private String ultimoNome;
     private LocalDate dataNascimento;
     private String email;
     private String telefone;
     private PerfilPessoa perfil;
-    private String ultimoLogin;
+    private OffsetDateTime ultimoLogin;
 }
