@@ -16,9 +16,9 @@
     - [X] Matrícula (limite 3 cursos)
     - [X] Log de tarefas (mínimo 30min, múltiplos logs por dia)
 - [X] Criar controllers REST para cada funcionalidade
-- [ ] Configurar JWT:
-    - [ ] Login / geração de token
-    - [ ] Filtro de autenticação nos endpoints
+- [X] Configurar JWT:
+    - [X] Login / geração de token
+    - [X] Filtro de autenticação nos endpoints
 - [ ] Preparar event producers Kafka:
     - [ ] StudentRegistered
     - [ ] CourseCreated / CourseUpdated
