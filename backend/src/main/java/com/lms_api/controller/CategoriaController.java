@@ -4,6 +4,8 @@ import com.lms_api.dto.CategoriaCreateDTO;
 import com.lms_api.dto.CategoriaDTO;
 import com.lms_api.entity.Categoria;
 import com.lms_api.service.CategoriaService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +15,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/categorias")
+@Tag(name = "Categorias", description = "Gerenciamento de categorias de cursos")
 public class CategoriaController {
 
     private final CategoriaService categoriaService;
@@ -22,6 +25,7 @@ public class CategoriaController {
     }
 
     @GetMapping
+    @Operation(summary = "Listar categorias", description = "Retorna todas as categorias cadastradas")
     public ResponseEntity<List<CategoriaDTO>> listar() {
         List<CategoriaDTO> dtos = categoriaService.listarCategorias()
                 .stream()
@@ -31,6 +35,7 @@ public class CategoriaController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Buscar categoria por ID", description = "Retorna uma categoria pelo seu ID")
     public ResponseEntity<CategoriaDTO> buscarPorId(@PathVariable Short id) {
         return categoriaService.buscarPorId(id)
                 .map(this::toDTO)
@@ -39,6 +44,7 @@ public class CategoriaController {
     }
 
     @PostMapping
+    @Operation(summary = "Criar categoria", description = "Cria uma nova categoria")
     public ResponseEntity<CategoriaDTO> criar(@RequestBody @Valid CategoriaCreateDTO dto) {
         Categoria categoria = toEntity(dto);
         Categoria salvo = categoriaService.salvar(categoria);
@@ -46,6 +52,7 @@ public class CategoriaController {
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Atualizar categoria", description = "Atualiza os dados de uma categoria")
     public ResponseEntity<CategoriaDTO> atualizar(@PathVariable Short id,
                                                   @RequestBody @Valid CategoriaCreateDTO dto) {
         if (categoriaService.buscarPorId(id).isEmpty()) {
@@ -59,6 +66,7 @@ public class CategoriaController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Deletar categoria", description = "Remove uma categoria pelo ID")
     public ResponseEntity<Void> deletar(@PathVariable Short id) {
         if (categoriaService.buscarPorId(id).isEmpty()) {
             return ResponseEntity.notFound().build();

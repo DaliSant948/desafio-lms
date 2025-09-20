@@ -8,6 +8,8 @@ import com.lms_api.entity.Pessoa;
 import com.lms_api.repository.CursoRepository;
 import com.lms_api.repository.PessoaRepository;
 import com.lms_api.service.MatriculaService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/matriculas")
+@Tag(name = "Matrículas", description = "Operações de matrícula dos estudantes")
 @RequiredArgsConstructor
 public class MatriculaController {
 
@@ -26,6 +29,7 @@ public class MatriculaController {
     private final CursoRepository cursoRepository;
 
     @PostMapping
+    @Operation(summary = "Criar matrícula", description = "Registra uma matrícula de estudante em um curso")
     public ResponseEntity<MatriculaDTO> criarMatricula(@RequestBody @Valid MatriculaCreateDTO dto) {
         Pessoa pessoa = pessoaRepository.findById(dto.getPessoaId())
                 .orElseThrow(() -> new IllegalArgumentException("Pessoa não encontrada"));
@@ -37,6 +41,7 @@ public class MatriculaController {
     }
 
     @GetMapping("/pessoa/{pessoaId}")
+    @Operation(summary = "Listar matrículas por pessoa", description = "Retorna todas as matrículas de um estudante")
     public ResponseEntity<List<MatriculaDTO>> listarPorPessoa(@PathVariable Long pessoaId) {
         Pessoa pessoa = pessoaRepository.findById(pessoaId)
                 .orElseThrow(() -> new IllegalArgumentException("Pessoa não encontrada"));

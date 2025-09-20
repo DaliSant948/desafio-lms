@@ -4,6 +4,8 @@ import com.lms_api.dto.CursoCreateDTO;
 import com.lms_api.dto.CursoDTO;
 import com.lms_api.entity.Curso;
 import com.lms_api.service.CursoService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -14,11 +16,13 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/cursos")
+@Tag(name = "Cursos", description = "CRUD e listagem de cursos")
 @RequiredArgsConstructor
 public class CursoController {
     private final CursoService cursoService;
 
     @PostMapping
+    @Operation(summary = "Criar curso", description = "Cria um novo curso no sistema")
     public ResponseEntity<CursoDTO> criarCurso(@RequestBody @Valid CursoCreateDTO dto) {
         Curso curso = toEntity(dto);
         Curso criado = cursoService.criarCurso(curso);
@@ -26,6 +30,7 @@ public class CursoController {
     }
 
     @GetMapping("/ativos")
+    @Operation(summary = "Listar cursos ativos", description = "Retorna todos os cursos ativos")
     public ResponseEntity<List<CursoDTO>> listarCursosAtivos() {
         List<CursoDTO> cursos = cursoService.listarCursosAtivos()
                 .stream()
