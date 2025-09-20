@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -53,5 +54,9 @@ public class PessoaService {
 
     public List<Pessoa> listarEstudantes() {
         return pessoaRepository.findAll();
+    }
+
+    public Optional<Pessoa> buscarPorEmail(String email) {
+        return pessoaRepository.findByEmail(email);
     }
 }
