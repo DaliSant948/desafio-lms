@@ -15,7 +15,11 @@ CREATE TABLE pessoas (
     perfil VARCHAR(20) NOT NULL CHECK (perfil IN ('estudante', 'administrador')),
     ultimo_login TIMESTAMP WITH TIME ZONE,
     criado_em TIMESTAMP WITH TIME ZONE DEFAULT now()
+    CONSTRAINT idade_minima CHECK (data_nascimento <= CURRENT_DATE - INTERVAL '16 years')
 );
+
+-- Índices para consultas comuns
+CREATE INDEX idx_pessoas_email ON pessoas(email);
 
 -- ======================
 -- TABELA: cursos
@@ -30,6 +34,9 @@ CREATE TABLE cursos (
     criado_em TIMESTAMP WITH TIME ZONE DEFAULT now(),
     CHECK (data_fim <= data_inicio + INTERVAL '6 months')
 );
+
+-- Índice para cursos ativos
+CREATE INDEX idx_cursos_ativo ON cursos(ativo);
 
 -- ======================
 -- TABELA: categorias
@@ -59,6 +66,10 @@ CREATE TABLE matriculas (
 status VARCHAR(20) NOT NULL CHECK (status IN ('ativo', 'concluido', 'cancelado')),
 UNIQUE (pessoa_id, curso_id)
 );
+
+-- Índices para consultas comuns
+CREATE INDEX idx_matriculas_pessoa_id ON matriculas(pessoa_id);
+CREATE INDEX idx_matriculas_curso_id ON matriculas(curso_id);
 
 -- ======================
 -- TABELA: tarefas
