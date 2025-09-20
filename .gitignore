@@ -40,3 +40,18 @@ docker-compose.override.yml
 *.bak
 *.old
 *.orig
+
+############################
+# Variáveis de ambiente
+.env
+############################
+
+############################
+# Arquivos de cobertura de testes
+coverage/
+*.lcov
+############################
+
+###########################################
+# Arquivos gerados por testes (JUnit, etc.)
+hs_err_pid*
