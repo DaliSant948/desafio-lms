@@ -1,5 +1,6 @@
 package com.lms_api.dto;
 
+import com.lms_api.entity.Pessoa;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -8,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.time.LocalDate;
 
@@ -37,4 +39,15 @@ public class PessoaCreateDTO {
 
     @NotBlank
     private String senha;
+
+    public Pessoa toEntity(BCryptPasswordEncoder passwordEncoder) {
+        return Pessoa.builder()
+                .primeiroNome(primeiroNome)
+                .ultimoNome(ultimoNome)
+                .dataNascimento(dataNascimento)
+                .email(email)
+                .telefone(telefone)
+                .senhaHash(passwordEncoder.encode(senha))
+                .build();
+    }
 }
